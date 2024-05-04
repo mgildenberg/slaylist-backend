@@ -1,19 +1,28 @@
 {
   "name": "slaylist-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "The backend of the Slaylist project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "lint": "npx eslint .",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Maddie Gildenberg",
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mgildenberg/slaylist-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mgildenberg/slaylist-backend/issues"
+  },
+  "homepage": "https://github.com/mgildenberg/slaylist-backend#readme"
 }
