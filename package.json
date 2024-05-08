@@ -2,7 +2,7 @@
   "name": "slaylist-backend",
   "version": "1.0.0",
   "description": "The backend of the Slaylist project",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "lint": "npx eslint .",
     "start": "node app.js",
