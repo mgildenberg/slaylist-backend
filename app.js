@@ -1,15 +1,30 @@
 // index.js
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
-// listen to port 3000
-const { PORT = 3000 } = process.env;
+const mainRouter = require("./routes/index");
+
+require("dotenv").config();
+
+console.log(process.env.NODE_ENV); // production
+
+mongoose
+  .connect("mongodb://127.0.0.1:27017/slaylist")
+  .then(() => {
+    console.log("Connected to DB");
+  })
+  .catch(console.error);
+// listen to port 3001
+const { PORT = 3001 } = process.env;
 
 const app = express();
 
 app.use(cors());
 
 app.use(requestLogger);
+
+app.use("/", mainRouter);
 
 app.use(errorLogger); // enabling the error logger
 

@@ -1,9 +1,12 @@
 const router = require("express").Router();
+const { createUser, login } = require("../controllers/users");
 
 // REGISTRATION AND LOGIN
 
 // POST /signup
+router.post("/signup", createUser);
 // POST /signin
+router.post("/signin", login);
 
 // Minimum set for project
 
@@ -27,8 +30,9 @@ const router = require("express").Router();
 
 // GET /slaylists/top
 // This would return the top 10 Slaylists with the most likes. No auth.
-app.get("/slaylists/top", (req, res) => {
+router.get("/slaylists/top", (req, res) => {
   // Fetch the top 10 Slaylists sorted by likes
+  // call function that does that
 });
 
 // Slaylists
@@ -47,4 +51,14 @@ app.get("/slaylists/top", (req, res) => {
 // GET returns the Slaylist’s entries/slaylets (for viewing the Modal)
 // GET /slaylist/:slaylistId/slaylets
 
-router.get("/", (req, res) => {});
+// router.use((req, res, next) => {
+//   return res.status.(404).send(message: {"Not found" });
+// });
+
+// router.get("/", (req, res) => {});
+
+router.use((req, res, next) => {
+  next(new NotFoundError("Requested resource not found"));
+});
+
+module.exports = router;

@@ -6,6 +6,9 @@ npm-debug.log*
 # Dependency directory
 node_modules
 
+# jwt
+utils/config.js
+
 # Optional npm cache directory
 .npm
 
