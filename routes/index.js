@@ -3,6 +3,7 @@ const { createUser, login } = require("../controllers/users");
 const { NotFoundError } = require("../errors/Errors");
 const userRouter = require("./users");
 const slaylistRouter = require("./slaylists");
+const likeRouter = require("./likes");
 
 // REGISTRATION AND LOGIN
 
@@ -49,10 +50,12 @@ router.use("/slaylists", slaylistRouter);
 // This is in the slaylistRouter
 
 // Likes
+router.use("/slaylists", likeRouter);
 // POST needs auth, used to add your Like
 // POST /slaylist/:slaylistId/likes
 // DELETE needs auth, used to remove your Like
 // DELETE /slaylist/:slaylistId/likes
+// This is in the likeRouter
 
 // Slaylets
 // POST needs auth and requires all fields to be valid (so also dependent on 3P API). Returns 201 when new slaylet is added.
