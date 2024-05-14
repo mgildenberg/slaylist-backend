@@ -31,12 +31,32 @@ const login = (req, res, next) => {
     })
     .catch((err) => {
       if (err.message === "Incorrect email or password") {
+        // return res.status(UNAUTHORIZED_ERROR).send({ message: err.message });
         next(new UnauthorizedError("Incorrect email or password"));
       } else {
         console.error(err);
         console.log(err.name);
         next(err);
       }
+    });
+};
+
+const getCurrentUser = (req, res, next) => {
+  // Extract user ID from req.user, set by auth middleware
+  const userId = req.user._id;
+
+  User.findById(userId)
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError("No user with matching ID found");
+      }
+      // Return user data, excluding password
+      const { email, name, _id } = user;
+      return res.send({ email, name, _id });
+    })
+    .catch((err) => {
+      console.error(err);
+      next(err);
     });
 };
 
@@ -49,6 +69,7 @@ const createUser = (req, res, next) => {
         res.status(201).send({ email: user.email, name: user.name })
       )
       .catch((err) => {
+        console.log(req.body);
         console.error(err);
         console.log(err.name);
         if (err.name === "ValidationError") {
@@ -69,4 +90,5 @@ const createUser = (req, res, next) => {
 module.exports = {
   createUser,
   login,
+  getCurrentUser,
 };

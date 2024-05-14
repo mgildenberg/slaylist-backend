@@ -12,9 +12,9 @@ const slayletSchema = new mongoose.Schema({
       message: "You must enter a valid URL",
     },
   },
-  notes: { type: String, maxlength: 300 },
 
-  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+  handle: { type: String, maxlength: 45 },
+  notes: { type: String, maxlength: 300 },
 
   listOwner: {
     type: mongoose.Schema.Types.ObjectId,

@@ -1,5 +1,6 @@
 module.exports.errorHandler = (err, req, res, next) => {
   console.error(err);
+  console.error(req);
   // if an error has no status, set it to 500
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({

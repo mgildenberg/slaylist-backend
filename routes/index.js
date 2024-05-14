@@ -1,5 +1,8 @@
 const router = require("express").Router();
 const { createUser, login } = require("../controllers/users");
+const { NotFoundError } = require("../errors/Errors");
+const userRouter = require("./users");
+const slaylistRouter = require("./slaylists");
 
 // REGISTRATION AND LOGIN
 
@@ -12,6 +15,7 @@ router.post("/signin", login);
 
 // GET returning information about the logged-in user (email and name)
 // GET /users/me
+router.use("/users", userRouter);
 
 // GET returning data saved by the user
 // GET /users/me/slaylists
@@ -28,12 +32,14 @@ router.post("/signin", login);
 
 // Realistic set for usage
 
+router.use("/slaylists", slaylistRouter);
 // GET /slaylists/top
 // This would return the top 10 Slaylists with the most likes. No auth.
-router.get("/slaylists/top", (req, res) => {
-  // Fetch the top 10 Slaylists sorted by likes
-  // call function that does that
-});
+// router.get("/slaylists/top", (req, res) => {
+//   console.log("GET /slaylists/top");
+//   // Fetch the top 10 Slaylists sorted by likes
+//   // call function that does that
+// });
 
 // Slaylists
 // GET /slaylist/:slaylistId
@@ -55,7 +61,9 @@ router.get("/slaylists/top", (req, res) => {
 //   return res.status.(404).send(message: {"Not found" });
 // });
 
-// router.get("/", (req, res) => {});
+router.get("/", (req, res, next) => {
+  res.send("YAS KWEEN");
+});
 
 router.use((req, res, next) => {
   next(new NotFoundError("Requested resource not found"));
