@@ -4,6 +4,7 @@ const { NotFoundError } = require("../errors/Errors");
 const userRouter = require("./users");
 const slaylistRouter = require("./slaylists");
 const likeRouter = require("./likes");
+const slayletRouter = require("./slaylets");
 
 // REGISTRATION AND LOGIN
 
@@ -58,10 +59,12 @@ router.use("/slaylists", likeRouter);
 // This is in the likeRouter
 
 // Slaylets
+router.use("/slaylists", slayletRouter);
 // POST needs auth and requires all fields to be valid (so also dependent on 3P API). Returns 201 when new slaylet is added.
 // POST /slaylist/:slaylistId/slaylets, auth needed
 // GET returns the Slaylist’s entries/slaylets (for viewing the Modal)
 // GET /slaylist/:slaylistId/slaylets
+// This is in the slayletRouter
 
 // router.use((req, res, next) => {
 //   return res.status.(404).send(message: {"Not found" });
