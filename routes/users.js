@@ -4,11 +4,9 @@ const auth = require("../middlewares/auth");
 
 router.get("/me", auth, getCurrentUser);
 // GET returning data saved by the user
-// GET /users/me/slaylists
-// I think this would be used by the dashboard, not the front page
-router.get("/me/slaylists", auth, getMySlaylists);
 
-// router.post("/signup", createUser);
-// router.post("/signin", login);
+// GET returning the user's slaylists
+// This would be used by the dashboard, not the front page
+router.get("/me/slaylists", auth, getMySlaylists);
 
 module.exports = router;
