@@ -20,11 +20,13 @@ router.use("/users", userRouter);
 // GET returning data saved by the user
 // GET /users/me/slaylists
 // I think this would be used by the dashboard, not the front page
+// I put this in the userRouter
 
 // POST creating a data object by the user
 // POST would create a brand new Slaylist. Needs auth and requires tagline + category
 // POST returns 201 if a new user account was created
 // POST /slaylist
+// I put this in the slaylistRouter
 
 // DELETE removing the data object created by the user
 // DELETE /slaylists/:slaylistId, needs auth
@@ -44,6 +46,7 @@ router.use("/slaylists", slaylistRouter);
 // Slaylists
 // GET /slaylist/:slaylistId
 // GET would return the whole Slaylist’s metadata: owner username, current likes, title, tagline, and category. No auth.
+// This is in the slaylistRouter
 
 // Likes
 // POST needs auth, used to add your Like

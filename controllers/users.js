@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Slaylist = require("../models/slaylist");
 // const BadRequestError = require("../errors/BadRequestError");
 // const ConflictError = require("../errors/ConflictError");
 // const UnauthorizedError = require("../errors/UnauthorizedError");
@@ -38,6 +39,20 @@ const login = (req, res, next) => {
         console.log(err.name);
         next(err);
       }
+    });
+};
+
+const getMySlaylists = (req, res, next) => {
+  console.log("getMySlaylists");
+  console.log(req.user);
+  const userId = req.user._id;
+  Slaylist.find({ owner: userId })
+    .then((slaylists) => {
+      res.send(slaylists);
+    })
+    .catch((err) => {
+      console.error(err);
+      next(err);
     });
 };
 
@@ -91,4 +106,5 @@ module.exports = {
   createUser,
   login,
   getCurrentUser,
+  getMySlaylists,
 };
