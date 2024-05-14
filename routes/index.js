@@ -19,11 +19,6 @@ router.post("/signin", login);
 // GET /users/me
 router.use("/users", userRouter);
 
-// GET returning data saved by the user
-// GET /users/me/slaylists
-// I think this would be used by the dashboard, not the front page
-// I put this in the userRouter
-
 // POST creating a data object by the user
 // POST would create a brand new Slaylist. Needs auth and requires tagline + category
 // POST returns 201 if a new user account was created
@@ -37,34 +32,10 @@ router.use("/users", userRouter);
 // Realistic set for usage
 
 router.use("/slaylists", slaylistRouter);
-// GET /slaylists/top
-// This would return the top 10 Slaylists with the most likes. No auth.
-// router.get("/slaylists/top", (req, res) => {
-//   console.log("GET /slaylists/top");
-//   // Fetch the top 10 Slaylists sorted by likes
-//   // call function that does that
-// });
-
-// Slaylists
-// GET /slaylist/:slaylistId
-// GET would return the whole Slaylist’s metadata: owner username, current likes, title, tagline, and category. No auth.
-// This is in the slaylistRouter
-
 // Likes
 router.use("/slaylists", likeRouter);
-// POST needs auth, used to add your Like
-// POST /slaylist/:slaylistId/likes
-// DELETE needs auth, used to remove your Like
-// DELETE /slaylist/:slaylistId/likes
-// This is in the likeRouter
-
 // Slaylets
 router.use("/slaylists", slayletRouter);
-// POST needs auth and requires all fields to be valid (so also dependent on 3P API). Returns 201 when new slaylet is added.
-// POST /slaylist/:slaylistId/slaylets, auth needed
-// GET returns the Slaylist’s entries/slaylets (for viewing the Modal)
-// GET /slaylist/:slaylistId/slaylets
-// This is in the slayletRouter
 
 // router.use((req, res, next) => {
 //   return res.status.(404).send(message: {"Not found" });

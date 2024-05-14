@@ -80,8 +80,37 @@ const createSlaylist = (req, res, next) => {
     });
 };
 
+const deleteSlaylist = (req, res, next) => {
+  const slaylistId = req.params.slaylistId;
+
+  Slaylist.findById(slaylistId)
+    .orFail(() => {
+      throw new NotFoundError(
+        `No item found with the given ID: ${req.params.itemId}`
+      );
+    })
+    .then((slaylist) => {
+      if (String(slaylist.owner) === String(req.user._id)) {
+        return Slaylist.findByIdAndDelete(slaylistId).then(() => {
+          res.send({ message: "Slaylist deleted" });
+        });
+      }
+      throw new ForbiddenError("Cannot delete another user's slaylist");
+    })
+    .catch((err) => {
+      console.error(err);
+      if (err.name === "CastError") {
+        next(
+          new BadRequestError(`${err.name} | ID did not match expected format`)
+        );
+      }
+      next(err);
+    });
+};
+
 module.exports = {
   getTopSlaylists,
   createSlaylist,
   getSlaylistById,
+  deleteSlaylist,
 };
