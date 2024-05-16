@@ -26,7 +26,7 @@ const updateLike = (req, res, next) => {
 const deleteLike = (req, res, next) => {
   console.log(req);
   Slaylist.findByIdAndUpdate(
-    req.params.itemId,
+    req.params.slaylistId,
     { $pull: { likes: req.user._id } }, // remove _id from the array
     { new: true }
   )

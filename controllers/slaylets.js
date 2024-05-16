@@ -29,6 +29,7 @@ const getSlayletsBySlaylistId = (req, res, next) => {
 };
 
 const createSlaylet = (req, res, next) => {
+  // This may need to be updated to take in many slaylet entries from the body and map through them
   const { slaylistId } = req.params;
   const { link, handle, notes } = req.body;
 

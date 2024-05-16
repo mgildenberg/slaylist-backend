@@ -6,10 +6,14 @@ const {
   deleteSlaylist,
 } = require("../controllers/slaylists");
 const auth = require("../middlewares/auth");
+const {
+  createSlaylistValidation,
+  slaylistIdValidation,
+} = require("../middlewares/validation");
 
 router.get("/top", getTopSlaylists);
-router.get("/:slaylistId", getSlaylistById);
-router.post("/new", auth, createSlaylist);
-router.delete("/:slaylistId", auth, deleteSlaylist);
+router.get("/:slaylistId", slaylistIdValidation, getSlaylistById);
+router.post("/new", createSlaylistValidation, auth, createSlaylist);
+router.delete("/:slaylistId", slaylistIdValidation, auth, deleteSlaylist);
 
 module.exports = router;

@@ -5,13 +5,17 @@ const userRouter = require("./users");
 const slaylistRouter = require("./slaylists");
 const likeRouter = require("./likes");
 const slayletRouter = require("./slaylets");
+const {
+  userRegistrationValidation,
+  userLoginValidation,
+} = require("../middlewares/validation");
 
 // REGISTRATION AND LOGIN
 
 // POST /signup
-router.post("/signup", createUser);
+router.post("/signup", userRegistrationValidation, createUser);
 // POST /signin
-router.post("/signin", login);
+router.post("/signin", userLoginValidation, login);
 
 // GET returning information about the logged-in user (email and name)
 router.use("/users", userRouter);

@@ -13,7 +13,7 @@ const slayletSchema = new mongoose.Schema({
     },
   },
 
-  handle: { type: String, maxlength: 45 },
+  handle: { type: String, maxlength: 45, required: true },
   notes: { type: String, maxlength: 300 },
 
   listOwner: {
