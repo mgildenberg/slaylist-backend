@@ -21,8 +21,8 @@ mongoose
   .catch(console.error);
 
 mongoose.set("strictQuery", true);
-// listen to port 3001
-const { PORT = 3001 } = process.env;
+// listen to port 3000
+const { PORT = 3000 } = process.env;
 
 const app = express();
 
