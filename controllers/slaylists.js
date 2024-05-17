@@ -1,15 +1,14 @@
 const Slaylist = require("../models/slaylist");
-require("dotenv").config();
-const { BadRequestError, NotFoundError } = require("../errors/Errors");
-const JWT_SECRET = process.env.JWT_SECRET;
-console.log(JWT_SECRET);
+const NotFoundError = require("../errors/NotFoundError");
+const BadRequestError = require("../errors/BadRequestError");
+const ForbiddenError = require("../errors/ForbiddenError");
 
 const getTopSlaylists = (req, res, next) => {
   /* This returns the top 10 slaylists by likes by locating slaylist records, counting the number of likes, then sorting in descending order, then limiting to 1st 10.
   To improve performance, I could add a likesCount field in each document that gets updated every time a like is added or removed so that the aggregation doesn't need to happen on every load.
   */
 
-  return Slaylist.aggregate([
+  Slaylist.aggregate([
     {
       $addFields: {
         likesCount: { $size: "$likes" },
@@ -21,7 +20,7 @@ const getTopSlaylists = (req, res, next) => {
     .then((data) => {
       console.log("top slaylists from backend");
       console.log(data);
-      return res.send({ data });
+      res.send({ data });
     })
     .catch((err) => {
       console.error(err);
@@ -40,7 +39,7 @@ const getSlaylistById = (req, res, next) => {
       );
     })
     .then((slaylist) => {
-      return res.send(slaylist);
+      res.send(slaylist);
     })
     .catch((err) => {
       console.error(err);
@@ -66,7 +65,7 @@ const createSlaylist = (req, res, next) => {
 
   return Slaylist.create({ category, title, tagline, owner: ownerId })
     .then((slaylist) => {
-      return res.status(201).send(slaylist);
+      res.status(201).send(slaylist);
     })
     .catch((err) => {
       console.error(err);
@@ -81,7 +80,7 @@ const createSlaylist = (req, res, next) => {
 };
 
 const deleteSlaylist = (req, res, next) => {
-  const slaylistId = req.params.slaylistId;
+  const { slaylistId } = req.params;
 
   Slaylist.findById(slaylistId)
     .orFail(() => {

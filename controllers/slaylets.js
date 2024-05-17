@@ -1,8 +1,6 @@
 const Slaylet = require("../models/slaylet");
-require("dotenv").config();
-const { BadRequestError, NotFoundError } = require("../errors/Errors");
-const JWT_SECRET = process.env.JWT_SECRET;
-console.log(JWT_SECRET);
+const NotFoundError = require("../errors/NotFoundError");
+const BadRequestError = require("../errors/BadRequestError");
 
 const getSlayletsBySlaylistId = (req, res, next) => {
   const { slaylistId } = req.params;
@@ -14,7 +12,7 @@ const getSlayletsBySlaylistId = (req, res, next) => {
       );
     })
     .then((slaylet) => {
-      return res.send(slaylet);
+      res.send(slaylet);
     })
     .catch((err) => {
       console.error(err);
@@ -41,7 +39,7 @@ const createSlaylet = (req, res, next) => {
 
   return Slaylet.create({ link, handle, notes, listOwner: slaylistId })
     .then((slaylet) => {
-      return res.status(201).send(slaylet);
+      res.status(201).send(slaylet);
     })
     .catch((err) => {
       console.error(err);

@@ -1,19 +1,16 @@
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const Slaylist = require("../models/slaylist");
-// const BadRequestError = require("../errors/BadRequestError");
-// const ConflictError = require("../errors/ConflictError");
-// const UnauthorizedError = require("../errors/UnauthorizedError");
-const jwt = require("jsonwebtoken");
+
 require("dotenv").config();
-const bcrypt = require("bcrypt");
-// const { JWT_SECRET } = require("../utils/config");
-const JWT_SECRET = process.env.JWT_SECRET;
-console.log(JWT_SECRET);
-const {
-  BadRequestError,
-  ConflictError,
-  UnauthorizedError,
-} = require("../errors/Errors");
+
+const { JWT_SECRET } = process.env;
+
+const NotFoundError = require("../errors/NotFoundError");
+const BadRequestError = require("../errors/BadRequestError");
+const UnauthorizedError = require("../errors/ForbiddenError");
+const ConflictError = require("../errors/ConflictError");
 
 const login = (req, res, next) => {
   const { email, password } = req.body;

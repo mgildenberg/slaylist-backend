@@ -1,5 +1,6 @@
 const Slaylist = require("../models/slaylist");
-const { NotFoundError, BadRequestError } = require("../errors/Errors");
+const NotFoundError = require("../errors/NotFoundError");
+const BadRequestError = require("../errors/BadRequestError");
 
 const updateLike = (req, res, next) => {
   Slaylist.findByIdAndUpdate(

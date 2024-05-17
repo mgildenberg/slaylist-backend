@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { createUser, login } = require("../controllers/users");
-const { NotFoundError } = require("../errors/Errors");
+const { NotFoundError } = require("../errors/NotFoundError");
 const userRouter = require("./users");
 const slaylistRouter = require("./slaylists");
 const likeRouter = require("./likes");
@@ -21,6 +21,7 @@ router.post("/signin", userLoginValidation, login);
 router.use("/users", userRouter);
 
 // Slaylists, incl GET, POST, PUT, and DELETE
+// Note a few Slaylist routes don't require auth
 router.use("/slaylists", slaylistRouter);
 // Likes
 router.use("/slaylists", likeRouter);
