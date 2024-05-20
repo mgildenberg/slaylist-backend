@@ -57,7 +57,7 @@ const createSlayletValidation = celebrate({
       "string.uri": 'the "link" field must be a valid url',
     }),
 
-    notes: Joi.string().max(300).valid("cold", "hot", "warm").messages({
+    notes: Joi.string().max(300).messages({
       "string.max": 'The maximum length of the "notes" field is 300',
       "string.empty": 'The "notes" field must be filled in',
     }),
