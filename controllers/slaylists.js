@@ -2,6 +2,7 @@ const Slaylist = require("../models/slaylist");
 const NotFoundError = require("../errors/NotFoundError");
 const BadRequestError = require("../errors/BadRequestError");
 const ForbiddenError = require("../errors/ForbiddenError");
+const { ERROR_MESSAGES } = require("../errors/constants");
 
 const getTopSlaylists = (req, res, next) => {
   /* This returns the top 10 slaylists by likes by locating slaylist records, counting the number of likes, then sorting in descending order, then limiting to 1st 10.
@@ -34,9 +35,7 @@ const getSlaylistById = (req, res, next) => {
 
   return Slaylist.findById(slaylistId)
     .orFail(() => {
-      throw new NotFoundError(
-        ` No item found with the given ID: ${slaylistId}`
-      );
+      throw new NotFoundError(`${ERROR_MESSAGES.ITEM_NOT_FOUND} ${slaylistId}`);
     })
     .then((slaylist) => {
       res.send(slaylist);
@@ -46,7 +45,7 @@ const getSlaylistById = (req, res, next) => {
       console.log(err.name);
 
       if (err.name === "CastError") {
-        next(new BadRequestError("Incorrect or invalid data"));
+        next(new BadRequestError(ERROR_MESSAGES.BAD_REQUEST));
       }
 
       next(err);
@@ -60,7 +59,7 @@ const createSlaylist = (req, res, next) => {
   // Looks for missing fields and returns error before the Slaylist is created
   if (!category || !title || !tagline) {
     console.log(req.body);
-    throw new BadRequestError("Missing required fields");
+    throw new BadRequestError(ERROR_MESSAGES.MISSING_REQUIRED_FIELDS);
   }
 
   return Slaylist.create({ category, title, tagline, owner: ownerId })
@@ -72,7 +71,7 @@ const createSlaylist = (req, res, next) => {
       console.log(err.name);
 
       if (err.name === "ValidationError") {
-        next(new BadRequestError("Incorrect or invalid data"));
+        next(new BadRequestError(ERROR_MESSAGES.BAD_REQUEST));
       }
 
       next(err);
@@ -85,22 +84,24 @@ const deleteSlaylist = (req, res, next) => {
   Slaylist.findById(slaylistId)
     .orFail(() => {
       throw new NotFoundError(
-        `No item found with the given ID: ${req.params.itemId}`
+        `${ERROR_MESSAGES.ITEM_NOT_FOUND} ${req.params.itemId}`
       );
     })
     .then((slaylist) => {
       if (String(slaylist.owner) === String(req.user._id)) {
         return Slaylist.findByIdAndDelete(slaylistId).then(() => {
-          res.send({ message: "Slaylist deleted" });
+          res.send({ message: ERROR_MESSAGES.SLAYLIST_DELETED }); // SLAYLIST_DELETED is not really an error, it is confirming action completed
         });
       }
-      throw new ForbiddenError("Cannot delete another user's slaylist");
+      throw new ForbiddenError(ERROR_MESSAGES.FORBIDDEN_DELETE);
     })
     .catch((err) => {
       console.error(err);
       if (err.name === "CastError") {
         next(
-          new BadRequestError(`${err.name} | ID did not match expected format`)
+          new BadRequestError(
+            `${err.name} | ${ERROR_MESSAGES.BAD_REQUEST_ID_FORMAT}`
+          )
         );
       }
       next(err);

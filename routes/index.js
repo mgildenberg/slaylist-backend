@@ -9,6 +9,7 @@ const {
   userRegistrationValidation,
   userLoginValidation,
 } = require("../middlewares/validation");
+const { ERROR_MESSAGES } = require("../errors/constants");
 
 // REGISTRATION AND LOGIN
 
@@ -34,7 +35,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.use((req, res, next) => {
-  next(new NotFoundError("Requested resource not found"));
+  next(new NotFoundError(ERROR_MESSAGES.NOT_FOUND));
 });
 
 module.exports = router;

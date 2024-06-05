@@ -11,13 +11,14 @@ const NotFoundError = require("../errors/NotFoundError");
 const BadRequestError = require("../errors/BadRequestError");
 const UnauthorizedError = require("../errors/UnauthorizedError");
 const ConflictError = require("../errors/ConflictError");
+const { ERROR_MESSAGES } = require("../errors/constants");
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
 
   // Looks for missing fields in request and returns error before findUserByCredentials is run
   if (!email || !password) {
-    throw new UnauthorizedError("Incorrect email or password");
+    throw new UnauthorizedError(ERROR_MESSAGES.INCORRECT_CREDENTIALS);
   }
 
   return User.findUserByCredentials(email, password)
@@ -29,7 +30,7 @@ const login = (req, res, next) => {
     })
     .catch((err) => {
       if (err.message === "Incorrect email or password") {
-        next(new UnauthorizedError("Incorrect email or password"));
+        next(new UnauthorizedError(ERROR_MESSAGES.INCORRECT_CREDENTIALS));
       } else {
         console.error(err);
         console.log(err.name);
@@ -59,7 +60,7 @@ const getCurrentUser = (req, res, next) => {
   User.findById(userId)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError("No user with matching ID found");
+        throw new NotFoundError(ERROR_MESSAGES.USER_NOT_FOUND);
       }
       // Return user data, excluding password
       const { email, name, _id } = user;
@@ -87,9 +88,7 @@ const createUser = (req, res, next) => {
           next(new BadRequestError(err.message));
         }
         if (err.code === 11000) {
-          next(
-            new ConflictError("Duplicate email error: Email already exists.")
-          );
+          next(new ConflictError(ERROR_MESSAGES.DUPLICATE_EMAIL));
         }
 
         next(err);

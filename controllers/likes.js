@@ -1,6 +1,7 @@
 const Slaylist = require("../models/slaylist");
 const NotFoundError = require("../errors/NotFoundError");
 const BadRequestError = require("../errors/BadRequestError");
+const { ERROR_MESSAGES } = require("../errors/constants");
 
 const updateLike = (req, res, next) => {
   Slaylist.findByIdAndUpdate(
@@ -15,10 +16,10 @@ const updateLike = (req, res, next) => {
     .catch((err) => {
       console.log(err.name);
       if (err.name === "DocumentNotFoundError") {
-        next(new NotFoundError("Slaylist not found"));
+        next(new NotFoundError(ERROR_MESSAGES.SLAYLIST_NOT_FOUND));
       }
       if (err.name === "CastError") {
-        next(new BadRequestError("Incorrect or invalid data"));
+        next(new BadRequestError(ERROR_MESSAGES.BAD_REQUEST));
       }
       next(err);
     });
@@ -39,10 +40,10 @@ const deleteLike = (req, res, next) => {
       console.error(err);
       console.log(err.name);
       if (err.name === "DocumentNotFoundError") {
-        next(new NotFoundError("Slaylist not found"));
+        next(new NotFoundError(ERROR_MESSAGES.SLAYLIST_NOT_FOUND));
       }
       if (err.name === "CastError") {
-        next(new BadRequestError("Incorrect or invalid data"));
+        next(new BadRequestError(ERROR_MESSAGES.BAD_REQUEST));
       }
 
       next(err);

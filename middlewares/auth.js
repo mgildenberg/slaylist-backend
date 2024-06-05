@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const { JWT_SECRET } = process.env;
 const UnauthorizedError = require("../errors/UnauthorizedError");
+const { ERROR_MESSAGES } = require("../errors/constants");
 
 module.exports = (req, res, next) => {
   // get authorization from the header by destructuring
@@ -12,7 +13,7 @@ module.exports = (req, res, next) => {
 
   // check that the header exists and starts with 'Bearer '
   if (!authorization || !authorization.startsWith("Bearer ")) {
-    return next(new UnauthorizedError("Authorization required"));
+    return next(new UnauthorizedError(ERROR_MESSAGES.UNAUTHORIZED));
   }
 
   // auth header exists and is in correct format
@@ -25,7 +26,7 @@ module.exports = (req, res, next) => {
     payload = jwt.verify(token, JWT_SECRET);
   } catch (err) {
     // otherwise, return an error
-    return next(new UnauthorizedError("Authorization required"));
+    return next(new UnauthorizedError(ERROR_MESSAGES.UNAUTHORIZED));
   }
 
   /* Save payload to request. This makes the payload available
