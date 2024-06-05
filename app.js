@@ -13,8 +13,13 @@ require("dotenv").config();
 
 console.log(process.env.NODE_ENV); // production
 
+const prodDbAddress =
+  process.env.NODE_ENV === "production"
+    ? process.env.PROD_DB_ADDRESS
+    : "mongodb://127.0.0.1:27017/slaylist";
+
 mongoose
-  .connect("mongodb://127.0.0.1:27017/slaylist")
+  .connect(prodDbAddress)
   .then(() => {
     console.log("Connected to DB");
   })

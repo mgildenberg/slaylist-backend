@@ -9,7 +9,7 @@ const { JWT_SECRET } = process.env;
 
 const NotFoundError = require("../errors/NotFoundError");
 const BadRequestError = require("../errors/BadRequestError");
-const UnauthorizedError = require("../errors/ForbiddenError");
+const UnauthorizedError = require("../errors/UnauthorizedError");
 const ConflictError = require("../errors/ConflictError");
 
 const login = (req, res, next) => {
@@ -29,7 +29,6 @@ const login = (req, res, next) => {
     })
     .catch((err) => {
       if (err.message === "Incorrect email or password") {
-        // return res.status(UNAUTHORIZED_ERROR).send({ message: err.message });
         next(new UnauthorizedError("Incorrect email or password"));
       } else {
         console.error(err);
@@ -86,7 +85,6 @@ const createUser = (req, res, next) => {
         console.log(err.name);
         if (err.name === "ValidationError") {
           next(new BadRequestError(err.message));
-          // return res.status(VALIDATION_ERROR).send({ message: err.message });
         }
         if (err.code === 11000) {
           next(

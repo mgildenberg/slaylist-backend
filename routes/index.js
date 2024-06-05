@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { createUser, login } = require("../controllers/users");
-const { NotFoundError } = require("../errors/NotFoundError");
+const NotFoundError = require("../errors/NotFoundError");
 const userRouter = require("./users");
 const slaylistRouter = require("./slaylists");
 const likeRouter = require("./likes");
