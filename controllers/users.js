@@ -5,7 +5,7 @@ const Slaylist = require("../models/slaylist");
 
 require("dotenv").config();
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET } = require("../utils/config");
 
 const NotFoundError = require("../errors/NotFoundError");
 const BadRequestError = require("../errors/BadRequestError");
