@@ -1,19 +1,44 @@
 {
   "name": "slaylist-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "The backend of the Slaylist project",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "lint": "npx eslint .",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Maddie Gildenberg",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "@eslint/js": "^9.3.0",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "celebrate": "^15.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.2.0",
+    "express-winston": "^4.2.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.0",
+    "validator": "^13.11.0",
+    "winston": "^3.13.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mgildenberg/slaylist-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mgildenberg/slaylist-backend/issues"
+  },
+  "homepage": "https://github.com/mgildenberg/slaylist-backend#readme"
 }
